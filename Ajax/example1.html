@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Ajax is the techniqe of preventing reloading page when http call occurred</h1>
+    <hr/>
+    <button onclick="getData()">Get Request</button>
+    <button onclick="postData()">Post Request</button>
+    <hr/>
+    <h2 id="data"></h2>
+    <script>
+
+ const postValue=JSON.stringify({
+    title: 'faul',
+    body: 'bilay',
+    userId: 1,
+  });
+        function getData(){
+            let req=new XMLHttpRequest();
+            req.open("GET","https://jsonplaceholder.typicode.com/posts/1");
+            req.onload=function(){
+                document.getElementById("data").innerHTML=this.responseText;
+            };
+            req.send();
+        };
+
+        function postData(){
+            let req=new XMLHttpRequest();
+            req.open("POST","https://jsonplaceholder.typicode.com/posts");
+            req.setRequestHeader("Content-type","application/json; charset=UTF-8");
+            req.send(postValue);
+            console.log(postValue);
+        }
+    </script>
+</body>
+</html>

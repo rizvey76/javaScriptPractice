@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Ajax is the techniqe of preventing reloading page when http call occurred</h1>
+    <hr/>
+    <button onclick="getData()">Get Request</button>
+    <button onclick="postData()">Post Request</button>
+    <button onclick="updateData()">Update Request</button>
+    <button onclick="deleteData()">Delete Request</button>
+    <hr/>
+    <h2 id="data"></h2>
+    <script>
+    const postValue=JSON.stringify({
+    title: 'Samiun',
+    body: 'Jambo',
+    userId: 2,
+    });
+
+    const updateValue=JSON.stringify({
+    id: 1,
+    title: 'Mehak',
+    body: 'Ali',
+    userId: 1,
+  });
+
+    const sendRequest=(methot,URL,data)=>{
+        const promise=new Promise(function(resolve,reject){
+              const xmlReq=new XMLHttpRequest();
+              xmlReq.open(methot,URL,true);
+              xmlReq.setRequestHeader("Content-type","application/json; charset=UTF-8");
+              xmlReq.responseType="json";
+              xmlReq.onload=function(){
+                      if(xmlReq.status>=400){
+                          reject(xmlReq.response);
+                      }else{
+                        resolve(xmlReq.response);
+                      }
+              };
+              xmlReq.send(data);
+              
+        });
+       return promise; 
+    };
+
+    const getData=()=>{
+         sendRequest("GET","https://jsonplaceholder.typicode.com/posts/1").then((responseData)=>{
+             document.getElementById("data").innerHTML=JSON.stringify(responseData);
+         });
+    };
+
+    const postData=()=>{
+         sendRequest("POST","https://jsonplaceholder.typicode.com/posts",postValue).then((responseData)=>{
+             document.getElementById("data").innerHTML=JSON.stringify(responseData);
+         }).catch(
+            (err)=>{
+                document.getElementById("data").innerHTML=JSON.stringify(err); 
+            }
+         );
+    };
+
+    const updateData=()=>{
+        sendRequest("PUT","https://jsonplaceholder.typicode.com/posts/1",updateValue).then((responseData)=>{
+             document.getElementById("data").innerHTML=JSON.stringify(responseData);
+         });
+    };
+
+
+    const deleteData=()=>{
+        sendRequest("DELETE","https://jsonplaceholder.typicode.com/posts/1").then((responseData)=>{
+             document.getElementById("data").innerHTML=JSON.stringify(responseData);
+         });
+    };
+
+
+
+        
+    </script>
+</body>
+</html>

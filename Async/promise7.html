@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>This is the xample of promise with xmlHttpReq</h1>
+    <div id="html">
+
+    </div>
+
+    <script>
+        function display(htmlData){
+           document.getElementById("html").innerHTML=htmlData;
+        };
+
+        let myPromise=new Promise(
+            function(resolve,reject){
+               let req=new XMLHttpRequest();
+               req.open("GET","xmlHttpReq.html",true);
+               req.onload=function(){
+                if(req.status===200){
+                   resolve(this.responseText);
+                }else{
+                    reject("File not found");
+                }
+               };
+               req.send();
+            }
+        );
+
+        myPromise.then(
+            function(resolveData){
+                 display(resolveData);
+            },
+            function(rejectData){
+                 display(rejectData);
+            }
+        );
+    </script>
+</body>
+</html>

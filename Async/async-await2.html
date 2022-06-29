@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>The keyword "async" makes a function to return promise</h1>
+    <hr/>
+    <h1>The keyword "await" before a function makes it wait for a promise</h1>
+
+    <div id="html">
+
+    </div>
+
+    <script>
+        async function getFile(){
+            let myPromise=new Promise(
+                function(resolve,reject){
+                   let req=new XMLHttpRequest();
+                   req.open("GET","xmlHttpReq.html",true);
+                   req.onload=function(){
+                    if(req.status===200){
+                       resolve(this.responseText);
+                    }else{
+                        reject("File not found");
+                    }
+                   };
+                   req.send();
+                }
+            );
+
+            document.getElementById("html").innerHTML=await myPromise;
+        };
+        getFile();
+    </script>
+</body>
+</html>
